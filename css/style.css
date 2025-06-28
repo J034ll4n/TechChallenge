@@ -1,0 +1,296 @@
+/* ================================================================ */
+/* CSS FINAL E COMPLETO - v2.1                                      */
+/* Contém todas as funcionalidades e animações.                     */
+/* ================================================================ */
+
+:root {
+    --principal: #004489;
+    --icones: #14A85F;
+    --perigo: #dc3545;
+    --background: #FFFFFF;
+    --light-gray: #f4f5f7;
+    --navbar-height: 60px;
+}
+
+body {
+    background-color: var(--light-gray);
+    overflow: hidden;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* =============================================== */
+/* ESTILOS DA NAVBAR SUPERIOR                      */
+/* =============================================== */
+.top-navbar {
+    height: var(--navbar-height);
+    background-color: var(--background);
+    padding: 0 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1050;
+    border-bottom: 1px solid #dee2e6;
+}
+
+.navbar-logo img {
+    height: 55px;
+    width: auto;
+    object-fit: contain;
+}
+
+.navbar-right-items {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.navbar-icon {
+    color: var(--principal);
+    font-size: 1.5rem;
+    text-decoration: none;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.navbar-icon:hover {
+    opacity: 1;
+}
+
+.user-profile-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--principal);
+    text-decoration: none;
+}
+
+.user-profile-toggle .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 2px solid var(--principal);
+    object-fit: cover;
+}
+
+.dropdown-menu i {
+    margin-right: 10px;
+    color: var(--icones);
+    width: 20px;
+}
+
+/* =============================================== */
+/* CONTAINER PRINCIPAL E SIDEBAR EXPANSÍVEL        */
+/* =============================================== */
+.main-container {
+    display: flex;
+    height: calc(100vh - var(--navbar-height));
+    margin-top: var(--navbar-height);
+}
+
+.profile-sidebar {
+    width: 90px;
+    padding: 20px 10px;
+    background-color: var(--background);
+    border-right: 1px solid #dee2e6;
+    flex-shrink: 0; 
+    overflow-x: hidden;
+    transition: width 0.3s ease-in-out;
+}
+.profile-sidebar:hover {
+    width: 280px;
+}
+
+.profile-card { text-align: center; }
+
+.profile-picture-container {
+    position: relative;
+    display: inline-block;
+    cursor: default;
+}
+
+.notification-badge {
+    display: none;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 28px;
+    height: 28px;
+    background-color: var(--perigo);
+    color: white;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border: 2px solid white;
+    align-items: center;
+    justify-content: center;
+}
+.profile-sidebar:hover .notification-badge {
+    top: 10px;
+    right: 10px;
+}
+.notification-badge.show {
+    display: flex;
+}
+
+.profile-picture { 
+    width: 60px; height: 60px; 
+    border-radius: 50%;
+    border: 3px solid var(--principal); 
+    object-fit: cover; 
+    transition: all 0.3s ease; 
+}
+.profile-sidebar:hover .profile-picture { 
+    width: 100px; height: 100px; 
+}
+.profile-picture.alerta {
+    border-color: var(--perigo);
+}
+.profile-picture-container.clicavel {
+    cursor: pointer;
+}
+
+/* LÓGICA PARA ESCONDER, MOSTRAR E ANIMAR ALTURA DOS ELEMENTOS DA SIDEBAR */
+.profile-name, 
+.profile-level span, 
+.sidebar-buttons .btn span {
+    white-space: nowrap; 
+    opacity: 0; 
+    transition: opacity 0.2s ease-in-out; 
+    pointer-events: none;
+}
+.profile-sidebar hr, 
+.profile-sidebar h6, 
+.trophy-grid {
+    white-space: nowrap; 
+    opacity: 0;
+    overflow: hidden;
+    max-height: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-width: 0;
+    transition: opacity 0.2s ease-in-out, 
+                max-height 0.4s ease-in-out,
+                margin 0.4s ease-in-out,
+                padding 0.4s ease-in-out,
+                border-width 0.4s ease-in-out; 
+    pointer-events: none;
+}
+
+.profile-sidebar:hover .profile-name, 
+.profile-sidebar:hover .profile-level span, 
+.profile-sidebar:hover .sidebar-buttons .btn span {
+    opacity: 1; 
+    transition-delay: 0.15s;
+    pointer-events: auto;
+}
+.profile-sidebar:hover hr, 
+.profile-sidebar:hover h6,
+.profile-sidebar:hover .trophy-grid {
+    opacity: 1; 
+    max-height: 500px;
+    transition-delay: 0.1s;
+    pointer-events: auto;
+}
+.profile-sidebar:hover hr {
+    margin: 1rem 0;
+    border-width: 1px;
+}
+.profile-sidebar:hover h6 {
+    margin-bottom: 1rem;
+}
+
+.profile-level { 
+    display: flex; align-items: center; justify-content: center; 
+    gap: 8px; color: var(--icones); font-weight: 500; 
+}
+.trophy-grid { 
+    display: grid; grid-template-columns: 1fr 1fr; 
+    gap: 10px; 
+}
+.trophy-item { display: flex; flex-direction: column; align-items: center; color: var(--icones); }
+.trophy-item i { font-size: 2rem; }
+.trophy-item span { font-size: 0.8rem; }
+.sidebar-buttons { margin-top: 20px; }
+.profile-sidebar .btn { 
+    display: flex; align-items: center; justify-content: center; 
+    font-size: 1rem; padding: 12px 0; border: none;
+}
+.profile-sidebar .btn i { 
+    font-size: 1.5rem; min-width: 50px; text-align: center; 
+}
+.profile-sidebar .btn span { 
+    width: 0; overflow: hidden;
+}
+.profile-sidebar:hover .btn { 
+    justify-content: flex-start; 
+    padding: 12px 15px;
+}
+.profile-sidebar:hover .btn span { 
+    width: auto; margin-left: 10px; 
+}
+
+/* =============================================== */
+/* PAINEL ESTILO TRELLO                            */
+/* =============================================== */
+.trello-board { 
+    flex-grow: 1; display: flex; gap: 15px; 
+    padding: 20px; overflow-x: auto; overflow-y: hidden; 
+    height: 100%;
+}
+.trello-column { 
+    background-color: var(--light-gray); min-width: 320px;
+    width: 320px; border-radius: 12px; height: 100%; 
+    display: flex; flex-direction: column;
+}
+.column-title { 
+    font-size: 1rem; font-weight: 600; color: var(--principal); 
+    padding: 15px; margin-bottom: 10px; flex-shrink: 0;
+}
+.column-content {
+    padding: 0 15px 15px 15px;
+    overflow-y: auto;
+}
+.trello-card { 
+    border: 1px solid #ddd; border-radius: 8px; 
+    background-color: var(--background);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* =============================================== */
+/* CHATBOT                                         */
+/* =============================================== */
+#chatbot-container { position: fixed; bottom: 20px; right: 20px; z-index: 1040; }
+#chat-toggle-button { 
+    background-color: var(--principal); color: white; 
+    width: 60px; height: 60px; font-size: 1.5rem; 
+    border-radius: 50%; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); 
+    border: none; display: flex; align-items: center; justify-content: center; 
+    transition: all 0.3s ease;
+}
+#chat-toggle-button.active { background-color: var(--perigo); transform: rotate(180deg); }
+#chat-window { 
+    width: 350px; height: 500px; flex-direction: column; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2); 
+    border-radius: 15px; border: none;
+    transform: translateY(20px) scale(0.95);
+    opacity: 0; visibility: hidden;
+    transition: all 0.3s ease-in-out;
+}
+#chat-window.show {
+    transform: translateY(0) scale(1);
+    opacity: 1; visibility: visible;
+}
+#chat-window .card-header { background-color: var(--principal); }
+#messages-container { 
+    flex-grow: 1; overflow-y: auto; padding: 10px; 
+    display: flex; flex-direction: column; gap: 10px;
+}
+.message { padding: 10px 15px; border-radius: 15px; max-width: 85%; line-height: 1.4; }
+.bot-message { background-color: #f1f1f1; border-bottom-left-radius: 0; align-self: flex-start; }
+.user-message { background-color: var(--principal); color: white; border-bottom-right-radius: 0; align-self: flex-end; }
